@@ -1,0 +1,11 @@
+- hosts: localhost
+  become: true
+  tasks:
+  - name: Install htop
+    apt: name=htop
+
+  - name: Install tmux
+    apt: name=tmux
+
+  - name: Install mlocate
+    apt: name=mlocate
