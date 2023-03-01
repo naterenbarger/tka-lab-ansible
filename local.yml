@@ -1,4 +1,5 @@
 - hosts: localhost
+  connection: local
   become: true
   pre_tasks:
     - name: update repositories
@@ -7,5 +8,7 @@
 
   tasks:
     - include_tasks: tasks/users.yml
-    - include_tasks: tasks/packages.yml
     - include_tasks: tasks/cron.yml
+    - include_tasks: tasks/packages.yml
+    - include_tasks: tasks/indianasecurebrowser.yml
+    - include_tasks: tasks/collegeboardbrowser.yml
