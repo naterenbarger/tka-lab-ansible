@@ -39,6 +39,13 @@
       Keywords=Internet;WWW;Browser;Web;Explorer
       Categories=GNOME;GTK;Network;WebBrowser
 
+- name: Change Shortcut Mode and Ownership
+  file:
+    path: /home/tkastudent/Desktop/indianasecurebrowser.desktop
+    owner: tkastudent
+    group: tkastudent
+    mode: 0755
+
 - name: Check if College Board Secure Browser is installed
   command: dpkg-query -W "cbsecurebrowser"
   register: secure_browser_check_deb
@@ -72,3 +79,10 @@
       GenericName=College Board Secure Web Browser
       Keywords=Internet;WWW;Browser;Web;Explorer
       Categories=GNOME;GTK;Network;WebBrowser
+
+- name: Change Shortcut Mode and Ownership
+  file:
+    path: /home/tkastudent/Desktop/cbsecurebrowser.desktop
+    owner: tkastudent
+    group: tkastudent
+    mode: 0755
