@@ -1,6 +1,23 @@
-- name: Install packages
+- name: Install apt packages
   apt: name={{item}}
   with_items:
     - htop
     - tmux
     - mlocate
+
+- name: Check if Secure Browser is installed
+  command: dpkg-query -W "*SecureBrowser*"
+  register: secure_browser_check_deb
+  failed_when: secure_browser_check_deb.rc > 1
+  changed_when: secure_browser_check_deb.rc == 1
+
+- name: Download Secure Browser
+  get_url:
+    url=https://sb.portal.cambiumast.com/geturls?clientName=indiana&operatingSystem=ubuntu"
+    dest="./packages/SecureBrowser.deb"
+  when: secure_browser_check_deb.rc == 1
+
+- name: Install Secure Browser
+  apt: deb="./packages/SecureBrowser.deb"
+  sudo: true
+  when: secure_browser_check_deb.rc == 1
