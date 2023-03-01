@@ -21,6 +21,24 @@
   apt: deb="/home/ansible/IndianaSecureBrowser.deb"
   when: secure_browser_check_deb.rc == 1
 
+- name: Creating Indiana Secure Browser Desktop Icon
+  copy:
+    dest: "/home/tkastudent/Desktop/indianasecurebrowser.desktop"
+    content: |
+      #!/usr/bin/env xdg-open
+      [Desktop Entry]
+      Encoding=UTF-8
+      Version=8.0
+      Type=Application
+      Terminal=false
+      Exec=/usr/lib/IndianaSecureBrowser/IndianaSecureBrowser
+      Icon=/usr/lib/IndianaSecureBrowser/securebrowser.png
+      Name=IndianaSecureBrowser
+      Comment=Indiana Secure Browser
+      GenericName=Indiana Secure Web Browser
+      Keywords=Internet;WWW;Browser;Web;Explorer
+      Categories=GNOME;GTK;Network;WebBrowser
+
 - name: Check if College Board Secure Browser is installed
   command: dpkg-query -W "cbsecurebrowser"
   register: secure_browser_check_deb
@@ -37,4 +55,20 @@
   apt: deb="/home/ansible/CBSecureBrowser.deb"
   when: secure_browser_check_deb.rc == 1
 
-  
+- name: Creating CollegeBoard Secure Browser Desktop Icon
+  copy:
+    dest: "/home/tkastudent/Desktop/cbsecurebrowser.desktop"
+    content: |
+      #!/usr/bin/env xdg-open
+      [Desktop Entry]
+      Encoding=UTF-8
+      Version=8.0
+      Type=Application
+      Terminal=false
+      Exec=/usr/lib/CBSecureBrowser/CBSecureBrowser
+      Icon=/usr/lib/CBSecureBrowser/securebrowser.png
+      Name=CollegeBoardSecureBrowser
+      Comment=College Board Secure Browser
+      GenericName=College Board Secure Web Browser
+      Keywords=Internet;WWW;Browser;Web;Explorer
+      Categories=GNOME;GTK;Network;WebBrowser
