@@ -12,9 +12,9 @@
   changed_when: secure_browser_check_deb.rc == 1
 
 - name: Download Secure Browser
-  get_url:
-    url=https://sb.portal.cambiumast.com/geturls?clientName=indiana&operatingSystem=ubuntu"
-    dest="./packages/SecureBrowser.deb"
+  ansible.builtin.get_url:
+    url: https://sb.portal.cambiumast.com/geturls?clientName=indiana&operatingSystem=ubuntu
+    dest: ./packages/SecureBrowser.deb
   when: secure_browser_check_deb.rc == 1
 
 - name: Install Secure Browser
