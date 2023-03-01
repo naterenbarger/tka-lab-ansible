@@ -19,5 +19,4 @@
 
 - name: Install Secure Browser
   apt: deb="./packages/SecureBrowser.deb"
-  sudo: true
   when: secure_browser_check_deb.rc == 1
