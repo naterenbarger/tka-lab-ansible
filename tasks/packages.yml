@@ -5,18 +5,36 @@
     - tmux
     - mlocate
 
-- name: Check if Secure Browser is installed
-  command: dpkg-query -W "*SecureBrowser*"
+- name: Check if Indiana Secure Browser is installed
+  command: dpkg-query -W "indianasecurebrowser"
   register: secure_browser_check_deb
   failed_when: secure_browser_check_deb.rc > 1
   changed_when: secure_browser_check_deb.rc == 1
 
-- name: Download Secure Browser
+- name: Download Indiana Secure Browser
   ansible.builtin.get_url:
     url: https://sb.portal.cambiumast.com/geturls?clientName=indiana&operatingSystem=ubuntu
-    dest: /home/ansible/SecureBrowser.deb
+    dest: /home/ansible/IndianaSecureBrowser.deb
   when: secure_browser_check_deb.rc == 1
 
-- name: Install Secure Browser
-  apt: deb="/home/ansible/SecureBrowser.deb"
+- name: Install Indiana Secure Browser
+  apt: deb="/home/ansible/IndianaSecureBrowser.deb"
   when: secure_browser_check_deb.rc == 1
+
+- name: Check if College Board Secure Browser is installed
+  command: dpkg-query -W "indianasecurebrowser"
+  register: secure_browser_check_deb
+  failed_when: secure_browser_check_deb.rc > 1
+  changed_when: secure_browser_check_deb.rc == 1
+
+- name: Download College Board Secure Browser
+  ansible.builtin.get_url:
+    url: https://secure-media.collegeboard.org/digitalServices/digital-testing/files/CBSecureBrowser15.0-2022-08-08.deb
+    dest: /home/ansible/CBSecureBrowser.deb
+  when: secure_browser_check_deb.rc == 1
+
+- name: Install College Board Secure Browser
+  apt: deb="/home/ansible/CBSecureBrowser.deb"
+  when: secure_browser_check_deb.rc == 1
+
+  
