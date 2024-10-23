@@ -1,0 +1,12 @@
+- name: Check if Indiana Secure Browser is installed
+  command: dpkg-query -W "indianasecurebrowser"
+  register: secure_browser_check_deb
+  failed_when: secure_browser_check_deb.rc > 1
+  changed_when: secure_browser_check_deb.rc == 1
+  
+- name: Remove Indiana Secure Browser
+  apt:
+    pkg: indianasecurebrowser
+    state: absent
+  when: secure_browser_check_deb.rc == 1
+  become: true

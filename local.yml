@@ -7,8 +7,9 @@
       changed_when: False
 
   tasks:
-    - include_tasks: tasks/users.yml
-    - include_tasks: tasks/cron.yml
-    - include_tasks: tasks/packages.yml
-    - include_tasks: tasks/indianasecurebrowser.yml
-    - include_tasks: tasks/collegeboardbrowser.yml
+    - include_tasks: tasks/removesecurebrowser.yml
+    #- include_tasks: tasks/users.yml
+    #- include_tasks: tasks/cron.yml
+    #- include_tasks: tasks/packages.yml
+    #- include_tasks: tasks/indianasecurebrowser.yml
+    #- include_tasks: tasks/collegeboardbrowser.yml
