@@ -1,15 +1,15 @@
 - hosts: localhost
   connection: local
   become: true
-  pre_tasks:
-    - name: update repositories
-      apt: update_cache=yes
-      changed_when: False
+  #pre_tasks:
+  #  - name: update repositories
+  #    apt: update_cache=yes
+  #    changed_when: False
 
   tasks:
     - include_tasks: tasks/removesecurebrowser.yml
     #- include_tasks: tasks/users.yml
-    #- include_tasks: tasks/cron.yml
+    - include_tasks: tasks/cron.yml
     #- include_tasks: tasks/packages.yml
     #- include_tasks: tasks/indianasecurebrowser.yml
     #- include_tasks: tasks/collegeboardbrowser.yml
