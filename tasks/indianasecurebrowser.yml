@@ -1,18 +1,27 @@
+- name: Gather the package facts
+  ansible.builtin.package_facts:
+    manager: auto
+
 - name: Check if Indiana Secure Browser is installed
-  command: dpkg-query -W "indianasecurebrowser"
-  register: secure_browser_check_deb
-  failed_when: secure_browser_check_deb.rc > 1
-  changed_when: secure_browser_check_deb.rc == 1
+  ansible.builtin.debug:
+    msg: "{{ ansible_facts.packages['indianasecurebrowser'][0].version }}"
+  when: "'indianasecurebrowser' in ansible_facts.packages"
+
+- name: Check if Indiana Secure Browser is installed
+  command: /usr/bin/dpkg-query --show --showformat ${Version} indianasecurebrowser
+  register: secure_browser_version
+  failed_when: secure_browser_version.stdout is version('115.10.0.17', '<') 
+  changed_when: secure_browser_version.stdout is version('115.10.0.17', '!=') 
 
 - name: Download Indiana Secure Browser
   ansible.builtin.get_url:
     url: https://sb.portal.cambiumast.com/geturls?clientName=indiana&operatingSystem=ubuntu
     dest: /home/ansible/IndianaSecureBrowser.deb
-  when: secure_browser_check_deb.rc == 1
+  when: secure_browser_version.stdout is version('115.10.0.17', '<')
 
 - name: Install Indiana Secure Browser
   apt: deb="/home/ansible/IndianaSecureBrowser.deb"
-  when: secure_browser_check_deb.rc == 1
+  when: secure_browser_version.stdout is version('115.10.0.17', '<')
 
 - name: Creating Indiana Secure Browser Desktop Icon
   copy:
