@@ -1,0 +1,49 @@
+- name: Gather the package facts
+  ansible.builtin.package_facts:
+    manager: auto
+
+- name: Check if Google Chrome is installed
+  ansible.builtin.debug:
+    msg: "{{ ansible_facts.packages['google-chrome-stable'][0].version }}"
+  when: "'google-chrome-stable' in ansible_facts.packages"
+
+- name: Check if Google Chrome is installed
+  command: /usr/bin/dpkg-query --show --showformat '${Version}' google-chrome-stable
+  register: chrome_version
+  failed_when: chrome_version.stdout is version('140.0.7339.80-1', '<')
+  changed_when: chrome_version.stdout is version('140.0.7339.80-1', '!=')
+
+- name: Download Google Chrome
+  ansible.builtin.get_url:
+    url: https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+    dest: /home/ansible/google-chrome-stable_current_amd64.deb
+  when: chrome_version.stdout is version('140.0.7339.80-1', '<')
+
+- name: Install Google Chrome
+  apt: deb="/home/ansible/google-chrome-stable_current_amd64.deb"
+  when: chrome_version.stdout is version('140.0.7339.80-1', '<')
+
+- name: Creating Google Chrome Desktop Icon
+  copy:
+    dest: "/home/tkastudent/Desktop/googlechrome.desktop"
+    content: |
+      #!/usr/bin/env xdg-open
+      [Desktop Entry]
+      Encoding=UTF-8
+      Version=8.0
+      Type=Application
+      Terminal=false
+      Exec=/usr/bin/google-chrome-stable
+      Icon=/usr/bin/google-chrome-stable
+      Name=Google Chrome
+      Comment=Google Chrome
+      GenericName=Google Chrome
+      Keywords=Internet;WWW;Browser;Web;Explorer
+      Categories=GNOME;GTK;Network;WebBrowser
+
+- name: Change Shortcut Mode and Ownership
+  file:
+    path: /home/tkastudent/Desktop/googlechrome.desktop
+    owner: tkastudent
+    group: tkastudent
+    mode: 0755

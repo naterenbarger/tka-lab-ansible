@@ -8,7 +8,7 @@
   when: "'indianasecurebrowser' in ansible_facts.packages"
 
 - name: Check if Indiana Secure Browser is installed
-  command: /usr/bin/dpkg-query --show --showformat ${Version} indianasecurebrowser
+  command: /usr/bin/dpkg-query --show --showformat '${Version}' indianasecurebrowser
   register: secure_browser_version
   failed_when: secure_browser_version.stdout is version('128.10.0.18', '<')
   changed_when: secure_browser_version.stdout is version('128.10.0.18', '!=')
