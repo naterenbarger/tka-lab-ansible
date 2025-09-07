@@ -10,7 +10,7 @@
 - name: Check if Indiana Secure Browser is installed
   command: /usr/bin/dpkg-query --show --showformat '${Version}' indianasecurebrowser
   register: secure_browser_version
-  failed_when: secure_browser_version.stdout is version('128.10.0.18', '<')
+  failed_when: secure_browser_version.stdout is version('128.10.0.18', '=')
   changed_when: secure_browser_version.stdout is version('128.10.0.18', '!=')
 
 - name: Download Indiana Secure Browser

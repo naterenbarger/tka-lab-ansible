@@ -10,7 +10,7 @@
 - name: Check if Google Chrome is installed
   command: /usr/bin/dpkg-query --show --showformat '${Version}' google-chrome-stable
   register: chrome_version
-  failed_when: chrome_version.stdout is version('140.0.7339.80-1', '<')
+  failed_when: chrome_version.stdout is version('140.0.7339.80-1', '=')
   changed_when: chrome_version.stdout is version('140.0.7339.80-1', '!=')
 
 - name: Download Google Chrome
